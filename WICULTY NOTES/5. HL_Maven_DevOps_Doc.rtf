@@ -1,0 +1,338 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Times New Roman;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\qj\lang1033\f0\fs28\tab\tab\tab MAVEN\tab\tab\tab\tab\par
+DAY-1:\tab\tab     ============\par
+#1\par
+\tab Java Build and Deployment End-To-End Workflow.\par
+\par
+#2\par
+Basics\par
+\tab - Java program\par
+\tab - manual compilation\par
+\par
+#3\par
+What is Maven? Why we need a build tool?\par
+\par
+\par
+#4\par
+Installation\par
+\tab - Download JDK 1.8(jdk-8u251-linux-x64.tar.gz) and extract it to your favourite location\par
+\tab         Download URL - https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html\par
+\tab - Download lastest Maven(apache-maven-3.6.3-bin.tar.gz) and extract it to your favourite \par
+\tab   location\par
+\tab         Download URL - https://maven.apache.org/download.cgi\par
+\tab - Setup 'JAVA_HOME' Envi:qronment variable for Maven to locate JDK.\par
+\tab - Setup 'M2_HOME' for PATH variable\par
+\tab - Setup 'PATH' to run jdk and maven commands from any directory in the system.\par
+\tab\tab 1. JAVA_HOME\par
+\tab\tab 2. M2_HOME\par
+\tab\tab 3. PATH\par
+\par
+Installing JDK and Maven:\par
+=======================\par
+  A. open $USER_HOME/.bashrc\par
+  \par
+  B. create below Environment variables\par
+\tab export M2_HOME=/home/gamut/mavensoftwares/apache-maven-3.3.9\par
+\tab export JAVA_HOME=/home/gamut/mavensoftwares/jdk1.8.0_121\par
+\par
+\tab export PATH=$M2_HOME/bin:$JAVA_HOME/bin:$PATH\par
+\par
+Load .bashrc using below command or open new ternimial\par
+\tab $ source .bashrc\par
+ \par
+Verify Installation\par
+\tab $ javac -version\par
+\tab $ mvn --version\par
+\par
+DAY-2:\par
+\par
+#5 TEST YOUR KOWLEDGE\par
+Build and Deployment E2E work-flow and basics\par
+\tab - What is compilation & why we compile the source code?\par
+\tab - Packaging sequence for Java application\par
+\tab - What is Build\par
+\tab - What is Deployment\par
+\tab - Environment\par
+\tab - Dev, QA & DevOps teams Interaction and Collaboration.\par
+\par
+#6\par
+Maven's standard project layout\par
+=================================\par
+Project creation:\par
+-----------------\par
+java projects which are created by maven, ideally follows below project folder structure.\par
+\tab\par
+\tab\tab flipkart\par
+\tab\tab    |\par
+\tab\tab   src\tab\tab pom.xml\par
+\tab\tab    |\par
+           main--------- test\par
+\tab      | \tab\tab |\par
+           java\tab\tab java\par
+\tab     |\tab\tab  |\par
+       (group.Id    (group.Id)\par
+\tab   |\tab\tab |\par
+      App.java\tab    AppTest.java\par
+\par
+flipkart - is called "Project name" / "ArtifactID"\par
+src \tab  - Source folder which contains the \par
+\tab\tab\tab\tab application source code\par
+main\tab  - Contains application's main functional code\par
+test\tab  - Contains application's unit testing code\par
+pom.xml  - Maven's build file using which we can\par
+\tab\tab\tab\tab configure build steps such as \par
+\tab\tab\tab\tab compilation, test runs, jar/war creation,\par
+\tab\tab\tab\tab deployments...etc.\par
+\par
+\par
+DAY-3:\par
+#8\par
+Building the maven project:\par
+-----------------------\par
+\par
+# Install git\par
+\tab $ sudo apt-get update\par
+\tab $ sudo apt-get install git\par
+\tab $ git --version --> verify git installation.\par
+\par
+#\par
+Clone the code from Git Or create your own Project using below Maven command\par
+   Clone:\par
+\tab $ git clone https://github.com/nageshvkn/flipkart.git\par
+        \par
+#\par
+Building the project using Maven. Use below command.\par
+\tab $ mvn install\par
+\par
+\par
+$ mvn install - command executes below "build life cycle phases" automatically. \par
+\par
+\tab - initialize\par
+\tab\tab prepares project with initial pre-\par
+\tab\tab requisites ex: creating necessary directory structure (i.e. target directory)\par
+\tab - validate\par
+\tab\tab validate project's folder structure\tab\tab\par
+\tab - compile\par
+\tab\tab compiles "main" java code.\par
+\tab - test-compile\par
+\tab\tab compiles "test" java code\par
+\tab - test\par
+\tab\tab Runs the test cases and generates test reports.\par
+\tab - package\par
+\tab\tab creates jar/war.\par
+\tab - install\par
+\tab\tab copy built artifacts i.e jar/war file into local repository $USER_HOME/.m2\par
+\tab\tab folder.\par
+\par
+\par
+#\par
+Verify Built artifacts:\par
+--------------------------\par
+Go to "target" folder and observe below.\par
+\tab\par
+\tab\tab\tab target\par
+\tab\tab\tab   |\par
+\tab\tab classes     test-classes\tab surefire-reports\tab jar/war file\par
+\par
+\par
+\tab classes: directory contains compiled class files\par
+\tab\tab\tab\tab of main source code\par
+\tab test-classes: directory contains compiled class\par
+\tab\tab\tab\tab files of test source code\par
+\tab\tab\tab\tab\par
+\tab surefire-reports: contains test reports.\par
+\par
+\tab flipkart-1.0-SNAPSHOT.jar: jar file of the main code\par
+\par
+Note:\par
+first time when we run 'mvn install' command, Maven downloads all missing dependencies into .m2  from maven's central repository.\par
+So, we need to have internet when we run 'mvn install' command first time.\par
+\par
+\par
+#\par
+Understanding pom.xml file structure\par
+\par
+#10\par
+Artifact path in local repository .m2\par
+ $USER_HOME/.m2/repository/groupId/artifactId/version/jar-OR-war-file\par
+\par
+- Package naming convention:\par
+\tab artifactId-version.jar/war\par
+\par
+\par
+DAY-4:\par
+#11:\tab\par
+Maven has "Automatic Dependency resolution" feature\par
+\tab\par
+\tab - Direct dependency\par
+\tab - Transitive dependency (A -> B, B -> C,  A -> B & C)\par
+\tab   ( B is direct dependency for A and C is Transitive dependecy for A)\par
+\tab   ( To compile AppTest.java, we need Junit.jar. So Junit.jar becomes direct dependency.\par
+\tab     To execute Junit.jar, we need hamcrest.jar. So hamcrest.jar becomes transitive \par
+\tab     dependency ) \par
+\par
+\par
+Maven way of dependency addition, detection from different repositories.\par
+\par
+#12\par
+Maven repositories\par
+\tab - Central\par
+\tab - Private ( You can setup using Nexus / Jfrog-atifactrory tool )\par
+\tab - Local (.m2)\par
+\par
+#13\par
+\tab $ mvn deploy (uploads jar files to private (nexus) repository)\par
+\par
+\par
+#14\par
+"mvn clean" & Build types\par
+        - Complete Build\par
+        - Incremental Build\par
+        - Daily Build\par
+        - Nightly Build\par
+\par
+\par
+# Skip test cases\par
+$ mvn install -DskipTest (skip test cases execution)\par
+$ mvn install -Dmaven.test.skip=true (skips compilation and test case execution)\par
+\par
+$ mvn compiler:testCompile (Compiles only testing code)\par
+$ mvn surefire:test        (Executes the test cases and generates reports)\par
+\par
+\par
+#18\par
+Where Maven's coordinates / GAV parameters are helpful?\par
+\tab - To decide artifact storage path in local repository.\par
+\tab - To decide jar/war name\par
+\tab - To define a dependency in pom.xml file.\par
+\par
+#19\par
+PROJECT-02: WEB Application Build and Deployment.\par
+------------\par
+Goal: \par
+\tab - Create a project for flipkart web application and perform end-to-end build and deployment\par
+\tab - Handling build and deployment for any web application\par
+\par
+Steps:\par
+------\par
+# Install git\par
+\tab $ sudo apt-get update\par
+\tab $ sudo apt-get install git\par
+\tab $ git --version --> verify git installation\par
+\par
+#\par
+Clone the code from Git\par
+\tab $ git clone https://github.com/nageshvkn/iflipkart.git\par
+\tab                                OR\par
+Create a new project:\par
+        $ mvn archetype:generate -DgroupId=com.flipkart -DartifactId=flipkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp\par
+\par
+#\par
+Building the project using Maven. Use below command.\par
+\tab $ mvn install\par
+\tab\par
+#\par
+Check final artifact i.e flipkart.war file in target directory\par
+$ ls target \par
+\par
+#\par
+Set-up tomcat for deployment\par
+- Download tomcat *.tar.gz and JDK.\par
+- Extract to your favouriate location\par
+- Make sure JAVA_HOME environment variable is set\par
+\par
+#\par
+Deploy flipkart.war into tomcat deployment path\par
+$ cp target/flipkart.war $TOMCAT_HOME/webapps\par
+\par
+#\par
+Start tomcat server\par
+$ cd $TOMCAT_HOME/bin \par
+$ ./startup.sh\par
+\par
+#\par
+Launch application with below URL.\par
+http://localhost:8080/flipkart\par
+\par
+Syntax:\par
+[http://TomcatServerIP:Port/WarFilename]\par
+\par
+\par
+#26\par
+Project:2 (Real-time End-to-End Build and Deployment Process)\par
+=================================\par
+Goals: \par
+- Building the War for large scale real-time kinda application\par
+- Learning Deployments with a dedicated tomcat Server\par
+\par
+Steps:\par
+------------\par
+#\par
+Install GIT\par
+$ sudo apt-get update\par
+$ sudo apt-get install git\par
+\par
+# Clone gamutkart application source code into the build server from below "gamutkart" github repository.\par
+$ git clone https://github.com/nageshvkn/gamutkart2.git\par
+\par
+3.\par
+Build "gamutkart" application using below command.\par
+$ mvn install\par
+\par
+4. \par
+Deploy 'gamutkart.war' application to remote server deployment location(i.e $TOMCAT_HOME/webapps) using below command.\par
+\tab $ cp target/gamutgurus.war $TOMCAT_HOME/webapps\par
+\par
+4A.\par
+After the deployment, we need start the server using below tomcat startup comamnd.\par
+\tab $ cd $TOMCAT_HOME/bin\par
+\tab $ ./startup.sh\par
+\par
+5.\par
+Tomcat by default runs on port 8080. So application can be accessed with below URL.\par
+\par
+\tab ex: http://IPAddress:8080/gamutgurus\par
+ \tab     http://localhost:8080/gamutgurus (If application is deployed in local machine)\par
+\par
+6. NOTE:\par
+In case there is any issue in the application, errors will be logged in \par
+"$TOMCAT_HOME/logs/catalina.2017-03-24.log" file.\par
+\par
+We can check this file and if there are any errors/exceptions, we provide this information to developers.\par
+\par
+7.\par
+Note: If you want to change the port number, Go to below file and change the port number where you see something like this. ( port="8080" protocol="HTTP/1.1")\par
+\tab $ vim $TOMCAT_HOME/conf/server.xml\par
+\par
+#\par
+Interview Notes:\par
+\par
+Explain Maven Life cycle phases:\par
+=============================================\par
+- When we execute '$ mvn install' command..\par
+\tab - By default maven reads 'pom.xml' file and runs the given target(i.e install).\par
+\tab   before running 'install' target, It will read GAV paramerters, packaging \par
+\tab\tab attribute for creating jar/war file and also downloads declared dependencies\par
+\tab\tab from central/remote repositories. \par
+\tab - According to Maven's build lifecycle, maven executes all required build steps \tab   such as:\par
+\tab\tab initialize - creates all necessary folder structure\par
+\tab\tab validate   - validates project structure\tab\tab\par
+\tab\tab compile\tab    - compiles main code\par
+\tab     test-compile - compiles test code\par
+\tab\tab test\tab      - executes test cases and generates reports\par
+\tab\tab package\tab\tab  - creates jar/war file\par
+\tab\tab install\tab\tab  - copies jar/war file into local repository i.e ~$USER_HOME/.m2\par
+\par
+\par
+Qns:\par
+1. How do you continue the build even after compilation failures.\par
+        for Main & Test\par
+failOnError=true\par
+       \par
+2. Maven & ANT comparison\par
+\par
+\par
+\par
+\par
+}
+ 

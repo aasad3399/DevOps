@@ -1,0 +1,272 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Times New Roman;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\qj\lang1033\f0\fs28                                         GIT\par
+                                  =================\par
+                                                                          \par
+# What is VCS. Why we need VCS.\par
+\tab VCS features.\par
+\tab\par
+--> Refer 'ProGit' for official documentation.\par
+\par
+#\par
+GIT Installation (Ubuntu):\par
+$ sudo apt-get update\par
+$ sudo apt-get install git\par
+\par
+Verify Installation:\par
+\tab which git\par
+\tab git --version\par
+\par
+GIT Uninstallation:\par
+$ sudo apt-get remove git\par
+\par
+#\par
+Git Architecture\par
+- end-to-end git work-flow\par
+\par
+#\par
+Staging Index/Stage\par
+\par
+- Skip staging\par
+\tab $ git commit -am "submit all pending changes"\par
+\par
+Note: If you want to skip the staging, you need to commit all pending changes.\par
+      For new file, you have to go throgh the 'stage' process.\par
+\par
+\par
+# Show all the files that are modified as part of a commit (with content)\par
+git show <SHA>\par
+git show b85a6e123\par
+\par
+#\par
+- Git Commit structure\par
+\tab SHA value / commit ID\par
+\tab User & email\par
+\tab Date & time stamp\par
+\tab Commit message\par
+\tab  \par
+# How SHA is generated?\par
+SHA / Version / Revison / Commit Id\par
+\par
+--7:00 AM weekend batch--\par
+1. VM creations\par
+2. Vim editor shortcuts\par
+\par
+#\par
+Creating remote repository in github\par
+===============\par
+1. create an account in github.com\par
+\tab URL: https://github.com\par
+\par
+2. login github.com with your credentials. \tab\par
+\tab click on "new" --> give a name "flipkart-ecomerce" --> "create reopository" \par
+\par
+3. copy the repo URL from Github:\par
+\tab https://github.com/nageshvkn/flipkart-ecomerce.git\par
+\par
+4. Clone the source code from remote repository using 'git clone' command\par
+\tab git clone https://github.com/nageshvkn/flipkart-ecomerce.git\par
+\par
+5. cd "flipkart-ecomerce" and observe ".git" folder. ".git" is called as "Local Reposiotory".\par
+\par
+6. Create some sample code and submit the code to remote repo.\par
+\tab --> touch Login.java\par
+\tab --> git add Login.java\par
+\tab --> git commit Login.java -m "login module code"\par
+\tab --> git push\par
+\par
+\tab --> git log Login.java\par
+\par
+#\par
+Setting up mandatory configurations:\par
+=============================================\par
+$ git config --global user.name "Nageswara Rao P"\par
+$ git config --global user.email "nageshvkn@gmail.com"\par
+\par
+Check the configurations using below command\par
+$ git config --list\par
+\par
+Git stores all configurations in below file\par
+"$USER_HOME/.gitconfig"\par
+\par
+Save Git user's password\par
+$ git config --global credential.helper store\par
+\par
+\par
+# Understand Git Jargon.\par
+\tab - Remote Repository\par
+\tab - Working Directory\par
+\tab - Local Repository\par
+\tab - Stage/"Staging Index"\par
+\tab - SHA\par
+\par
+# History\par
+\tab $ git log Login.java\par
+\tab $ git log\par
+\par
+#Qn.\par
+Show me all commits made by user "Ram" AND has a commit message "math function" in it.\par
+\par
+$ git log --author="Ram" --grep="math function"\par
+\par
+# GIT Commands\par
+\par
+1.  \par
+# See the content change of a file which is in 'source' area\par
+$ git diff Login.java\par
+\par
+# See the content change of a file which is in 'stage' area\par
+$ git diff --staged Login.java\par
+\par
+# See the content change of a file after the commit\par
+$ git show 123abc456\par
+\par
+2. Deleting a file\par
+\par
+        A.) git rm OMS.java\par
+\tab     git commit OMS.java -m "comment"\par
+\tab     git push\par
+\tab     \par
+ \par
+3. Renaming a file/folder\par
+\tab A.) git mv Login.java Login1.java\par
+\tab\tab git commit -m "rename Login"\tab\tab\par
+Note:\par
+Git will carry the history of old file to new file. To check complete history..\par
+\tab $ git log --follow Login1.java\par
+\par
+\par
+# Undoing the changes:\par
+undo/revert local changes from source area\par
+\tab $ git checkout -- LoginWeb.java\par
+\par
+Unstage the changes from STAGE area\par
+\tab $ git reset HEAD LoginWeb.java\par
+\par
+\par
+# BRANCHING\par
+\tab A. What is a branch?\par
+\tab B. Why and When we create a branch?\par
+\tab C. Branching Stratogies\par
+\par
+# List all the branches\par
+\tab $ git branch\par
+\tab\par
+# Creating a new branch\par
+\tab $ git branch dev_1.2.3\par
+\par
+# Push new branch to remote repository\par
+\tab $ git push origin dev_1.2.3\par
+\tab\tab\par
+# Switching from one branch to another\par
+\tab $ git checkout dev_1.2.3\par
+\par
+# Creating and switching to a newly created branch\par
+\tab $ git checkout -b dev_1.2.4\par
+\par
+# How do you clone a remote repository with a particular branch as default\par
+\tab $ git clone -b dev_1.2.4 https://github.com/nageshvkn/flipkart899.git\par
+\par
+# List all remote branches\par
+\tab $ git branch -r\par
+\tab\par
+# Deleting a branch\par
+        $ git branch -d dev_1.2.3\par
+        $ git push -d origin dev_1.2.3       \par
+\par
+Note: How do you restore a branch? how do you identify the sha value. more about 'reflog'\par
+???\par
+\par
+\par
+Merging:\par
+=========\par
+MERGING:\par
+=================\par
+\par
+# List all the branches\par
+\tab $ git branch\par
+\par
+# Create a new branch\par
+\tab $ git branch dev_1.2.3\par
+\par
+\par
+# Take a file which is common in master and dev_1.2.3 branch.\par
+  ex: Login.java\par
+\par
+# Make sure Login.java has below content in master and dev_1.2.3 branch\par
+\tab Login.java\par
+\tab\tab line#5 --> int a = 10;\par
+\tab\par
+# To create a conflict situation, we need to modify same line in two branches with different content.\par
+\par
+\tab ex: Login.java (master)\par
+\tab\tab\tab line#5 --> int a =100;\par
+\tab\tab\par
+\tab\tab Login.java (dev_1.2.3)\par
+\tab\tab\tab line#5 --> int a = 200;\par
+\par
+\par
+# Now merge the code from dev_1.2.3 to master branch\par
+  Before merge, make sure that you are on target branch i.e master (source branch: dev_1.2.3)\par
+\tab $ git checkout master\par
+\par
+# You have master code now, since currently checkout branch is master. Now bring/merge the changes from dev_1.2.3 to master by running below command. \par
+Git merge command merges the changes from dev_1.2.3 to master.\par
+\par
+\tab $ git merge dev_1.2.3\par
+\par
+# Run git status command to list conflict file\par
+\par
+#\par
+  Resolve the conflict and commit the merge\par
+\par
+# Run git push command to move the merge to Remote.\par
+\par
+\par
+# What is Conflict:\par
+If two users modify the same file in source and target branches and if the same line has different content, git can't decide which user's code it has to take. we call this situation as conflict.\par
+\par
+# How do you resolve the conflict: \par
+- Open the conflict file--> remove conflict markers--> select the right content \par
+  based on the discussion with developers\par
+- git add\par
+- git commit (after compilation and some z sanity testing)\par
+- git push\par
+\par
+#\tab\par
+git remote\par
+\tab PULL\par
+\tab FETCH\par
+\tab\par
+\tab PUSH\par
+\tab CLONE\par
+\par
+NOTES:\par
+SVN & Git differences:\par
+==========================\par
+- Centralized VCS -  Ex: CVS/SVN/Clearcase/Perforce\par
+- Distributed VCS -  Ex: GIT/Bitkeeper\par
+\par
+1.\par
+SVN is a centralised version control system. In svn, when a user checkout\'e2\'80\'99s the repository, he will get only the source code. Repository is not distributed to the user. In SVN multiple users connect to a single/centralized server. If that server goes down, no user will be able to work.\par
+\par
+\tab Where as Git is distributed VCS. In the sense, when user clones the repository, he will get source code as well as complete repository on his local disk. since repository is distributed across multiple users and each user has their own local repository, user will be able to submit the changes locally without connecting to the master server. (i.e he can also work offline)\par
+\par
+2.\par
+Git has staging area. Users can leverage this staging area to stage/save all the changes related to some issue/bug and  commit everything at once into local repository. hence, all the changes will be recorded as part of single sha/commit. user's get an opportunity to logically group the changes and commit as single changeset. this enables better tracking.\par
+\par
+3.\par
+Since git is distributed in nature, almost all transactions happen locally in the client machine and hence less overhead on the server so git is faster.\par
+\par
+3A.\par
+Users are free to create any no. branches in Git. where as in svn, all branches reside in server side, so may cause svn to be overloaded with multiple requests.\par
+\par
+4.\par
+Git seems to be good with merging.\par
+\par
+5.\par
+Git stores each change as SHA values but SVN uses simple numbers as revisions.\par
+\par
+\par
+\par
+}
+ 
