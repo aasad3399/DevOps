@@ -28,7 +28,7 @@
 
 		<header>
 			<h1>Gamut Gurus DevOps & Cloud Learning Platform</h1> 
-			<h4>Contact: +91-944897 1000 Email: info@gamutgurus.com</h4> 
+			<h4>Contact: +91-74111 12733 Email: aasad3399@gmail.com.com</h4> 
 		</header>
 
 		<div id="tabs">
